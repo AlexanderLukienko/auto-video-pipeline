@@ -1,4 +1,6 @@
 import time
+from app.services.export_service import finalize_exported_job
+from pathlib import Path
 
 from app.services.file_service import (
     get_next_video,
@@ -9,6 +11,21 @@ from app.services.file_service import (
 from app.utils.video_checks import is_file_ready
 from app.services.capcut.workflow import start_new_project
 from app.services.capcut.actions import open_import_window, confirm_import_file
+from app.services.capcut.actions import add_video_to_timeline
+from app.services.capcut.actions import open_enhance_panel, scroll_enhance_panel
+from app.services.capcut.actions import (
+    enable_enhance_quality,
+    generate_subtitles,
+)
+
+from app.services.capcut.actions import (
+    open_export_window,
+    set_export_filename,
+    confirm_export,
+    wait_for_export_to_finish,
+    close_export_popup,
+    close_project,
+)
 
 
 def main():
@@ -55,6 +72,47 @@ def main():
     time.sleep(1.5)
     confirm_import_file()
     print("✅ Файл импортирован в CapCut")
+
+    add_video_to_timeline()
+    print("✅ Видео добавлено на timeline")
+
+    open_enhance_panel()
+    scroll_enhance_panel()
+
+    print("✅ Enhance panel opened and scrolled")
+
+    enable_enhance_quality()
+    generate_subtitles()
+
+    print("✅ Enhance + subtitles done")
+
+    from app.services.capcut.actions import (
+    select_video_on_timeline,
+    apply_retouch,
+    adjust_audio,
+)
+
+    select_video_on_timeline()
+    apply_retouch()
+    adjust_audio()
+
+    print("✅ Retouch + audio applied")
+
+    export_filename = Path(job.original_name).stem
+
+    open_export_window()
+    set_export_filename(export_filename)
+    confirm_export()
+    wait_for_export_to_finish()
+    close_export_popup()
+    close_project()
+
+    print("✅ Export flow completed")
+    
+    done_file, archived_file = finalize_exported_job(job)
+
+    print(f"✅ Export moved to done: {done_file.name}")
+    print(f"✅ Original moved to archive: {archived_file.name}")
 
     print("=== TEST FINISHED SUCCESSFULLY ===")
 
