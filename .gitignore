@@ -1,0 +1,18 @@
+# virtual env
+.venv/
+
+# python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# ide
+.idea/
+.vscode/
+
+# local data (важно для тебя)
+*.db
+logs/
+temp/
