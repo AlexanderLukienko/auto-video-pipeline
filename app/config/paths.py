@@ -13,5 +13,5 @@ ALL_DIRS = [
     WORK_DIR,
     DONE_DIR,
     ERROR_DIR,
-    ARCHIVE_DIR
+    ARCHIVE_DIR,
 ]
